@@ -46,4 +46,75 @@ jQuery. This will run every 30-120 *1000 milliseconds. Inside this
 function, there will also be an if statement where if the timer
 reaches 0, the clearInterval method will be executed. 
 
-    */
+*/
+
+$(document).ready(function() {
+
+    // set our number counter to 30
+    let timeLeft = 3;
+
+    // declare intervalId to hold our interval ID when we execute a function that runs the countdown
+    let intervalId;
+
+    // declare variables for wins and losses
+    let wins = 0;
+    let losses = 0;
+    // the run function sets an interval that runs a function that decrements timeLeft once a second
+    function run() {
+        intervalId = setInterval(decrement, 1000);
+    }
+
+    // we declare decrement function
+    function decrement() {
+        
+        // decrease timeLeft by one
+        timeLeft--;
+        
+        // we show the number in the #timerDiv element
+        $("#timerDiv").html("<h2>" + timeLeft + "</h2>");
+
+        // when the time is over...
+        if (timeLeft === 0) {
+            // run the stop function
+            stop();
+            // run the timesUp function
+            timesUp();
+        }
+    }
+
+    // the stop function
+    function stop() {
+        // when this runs, the function clears our intervalId
+        clearInterval(intervalId);
+    }
+
+    // the timesUp function
+    function timesUp() {
+        
+        // when the time is up
+        // we select timerDiv and empty its contents
+        $("#timerDiv").empty();
+        // Then we create an html element dynamically
+        let gameOverDiv = $("<div>");
+        // then we add text content to this div
+        gameOverDiv.html("<h2> Game Over!</h2>");
+        
+        // and we append this gameOverDiv to #timerDiv
+        $("#timerDiv").append(gameOverDiv);
+
+        // we create another div where we store our score
+        let scoreDiv = $("<div>");
+        scoreDiv.html("<h2> Wins: " + wins + " Losses: " + losses + "</h2>");
+                
+        $("#gameScore").append(scoreDiv);
+    }
+
+    // we invoke the run function
+
+    run();
+
+
+    
+
+
+});
