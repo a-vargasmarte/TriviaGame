@@ -50,8 +50,87 @@ reaches 0, the clearInterval method will be executed.
 
 $(document).ready(function() {
 
+    // create an array of questions
+    
+    let triviaObjects = [{
+        question: "What is my name?",
+        answerChoices: ["Alberto", "Roberto", "Alejandro", "Alfonso"],
+        rightChoice: "Alberto"}, {
+        question: "Where do I come from?",
+        answerChoices: ["New York City, NY", "Santo Domingo, DR", "Amsterdam, NL", "Montpellier, FR", "Camaguey, Cuba"],
+        rightChoice: "Santo Domingo, DR"}, {
+        question: "How old am I?",
+        answerChoices: ["10-15","25-30", "40-50", "60-80"],
+        rightChoice: "25-30"}, {
+        question: "What is my favorite color?",
+        answerChoices: ["Red", "Blue", "Fuschia", "Magenta"]}];
+        
+        // for(let i = 0; i < triviaObjects.length; i++) {
+        //     console.log(triviaObjects[i].question);
+        // }
+
+    // use jQuery to dynamically create fixed html content to show our user.
+    
+    let questionDiv = $("#questionDiv");
+
+    // add the first question to #questionDiv
+    questionDiv.html("<h3>" + triviaObjects[0].question + "</h3>");
+
+    
+
+    
+
+    let firstQuestion = triviaObjects[0];
+    // for each answer of our question...
+    for (let i = 0; i < firstQuestion.answerChoices.length; i++) {
+        console.log(firstQuestion.answerChoices[i]);
+
+        // we create a new div where we will store our answers
+        let answerDiv = $("<div>");
+
+        answerDiv.attr("class", "container");
+
+        // we create a form element which will hold our labels with answers
+        let gameForm = $("<form>");
+
+        // create an input of type "radio" and set attributes
+        let answerLabel = $("<label>");
+
+        answerLabel.attr("class", "radio-inline");
+
+        let answerInput = $("<input>");
+
+        answerInput.attr({
+            type: "radio",
+            name: "optradio",
+            value: firstQuestion.answerChoices[i]
+        });
+
+        // set text
+        answerInput.text(firstQuestion.answerChoices[i]);
+
+        // append each input to their label 
+        answerLabel.append(answerInput);
+        
+        // append the label on our gameForm
+
+        gameForm.append(answerLabel);
+
+        // append the form on the answerDiv
+        answerDiv.append(gameForm);
+
+        // append answerDiv on #questionDiv
+        $("#questionDiv").append(answerDiv);
+    }
+
+    
+    
+    
+
+        
+    
     // set our number counter to 30
-    let timeLeft = 3;
+    let timeLeft = 5;
 
     // declare intervalId to hold our interval ID when we execute a function that runs the countdown
     let intervalId;
@@ -102,11 +181,11 @@ $(document).ready(function() {
         // and we append this gameOverDiv to #timerDiv
         $("#timerDiv").append(gameOverDiv);
 
-        // we create another div where we store our score
-        let scoreDiv = $("<div>");
+        // we select our gameScore div and add content to it
+        let scoreDiv = $("#gameScore");
         scoreDiv.html("<h2> Wins: " + wins + " Losses: " + losses + "</h2>");
                 
-        $("#gameScore").append(scoreDiv);
+        // $("#gameScore").append(scoreDiv);
     }
 
     // we invoke the run function
